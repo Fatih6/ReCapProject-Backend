@@ -5,12 +5,7 @@ using System.Text;
 
 namespace DataAccess.Abstract
 {
-    public interface IColorDal
+    public interface IColorDal:IEntityRepository<Color>
     {
-        List<CarColor> GetAll();
-        CarColor GetById(int colorId);
-        void Add(CarColor carColor);
-        void Delete(CarColor carColor);
-        void Update(CarColor carColor);
     }
 }

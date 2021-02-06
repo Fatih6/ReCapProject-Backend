@@ -3,7 +3,6 @@ using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace Business.Concrete
@@ -19,12 +18,22 @@ namespace Business.Concrete
 
         public void Add(Car car)
         {
-            _carDal.Add(car);
+            if (car.DailyPrice > 0)
+            {
+                _carDal.add(car);
+                Console.WriteLine("Araba başarıyla eklendi.");
+            }
+            else
+            {
+                Console.WriteLine($"Lütfen günlük fiyat kısmını 0'dan büyük giriniz. Girdiğiniz değer : {car.DailyPrice}");
+            }
         }
 
         public void Delete(Car car)
         {
             _carDal.Delete(car);
+            Console.WriteLine("Araba başarıyla silindi.");
+
         }
 
         public List<Car> GetAll()
@@ -32,24 +41,44 @@ namespace Business.Concrete
             return _carDal.GetAll();
         }
 
-        public List<Car> GetByBrandId(int brandId)
+        public List<Car> GetAllByBrandId(int id)
         {
-            return _carDal.GetAll().Where(cc=>cc.BrandId == brandId).ToList();
+            return _carDal.GetAll(c => c.BrandId == id);
         }
 
-        public Car GetByCarId(int carId)
+        public List<Car> GetAllByColorId(int id)
         {
-            return _carDal.GetById(carId);
+            return _carDal.GetAll(c => c.ColorId == id);
+
         }
 
-        public List<Car> GetByColorId(int colorId)
+        public Car GetByCarId(int id)
         {
-            return _carDal.GetAll().Where(cc => cc.ColorId == colorId).ToList();
+            return _carDal.Get(c => c.CarId == id);
+        }
+
+        public List<Car> GetByDailyPrice(decimal min, decimal max)
+        {
+            return _carDal.GetAll(c => c.DailyPrice >= min && c.DailyPrice <= max);
+
+        }
+
+        public List<Car> GetByModelYear(string year)
+        {
+            return _carDal.GetAll(c => c.ModelYear.Contains(year) == true);
         }
 
         public void Update(Car car)
         {
-            _carDal.Update(car);
+            if (car.DailyPrice > 0)
+            {
+                _carDal.Update(car);
+                Console.WriteLine("Araba başarıyla güncellendi.");
+            }
+            else
+            {
+                Console.WriteLine($"Lütfen günlük fiyat kısmını 0'dan büyük giriniz. Girdiğiniz değer : {car.DailyPrice}");
+            }
         }
     }
 }
