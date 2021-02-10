@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -63,9 +64,9 @@ namespace Business.Concrete
 
         }
 
-        public List<Car> GetByModelYear(string year)
+        public List<CarDetailDto> GetCarDetails()
         {
-            return _carDal.GetAll(c => c.ModelYear.Contains(year) == true);
+            return _carDal.GetCarDetails();
         }
 
         public void Update(Car car)
@@ -79,6 +80,16 @@ namespace Business.Concrete
             {
                 Console.WriteLine($"Lütfen günlük fiyat kısmını 0'dan büyük giriniz. Girdiğiniz değer : {car.DailyPrice}");
             }
+        }
+
+        List<CarDetailDto> ICarService.GetAllByBrandId(int id)
+        {
+            return _carDal.GetCarDetails(c=>c.BrandId == id);
+        }
+
+        List<CarDetailDto> ICarService.GetAllByColorId(int id)
+        {
+            return _carDal.GetCarDetails(c=>c.ColorId == id);
         }
     }
 }
