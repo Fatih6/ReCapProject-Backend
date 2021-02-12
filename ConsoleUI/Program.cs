@@ -20,18 +20,24 @@ namespace ConsoleUI
             //    Console.WriteLine($"{car.CarId}\t{colorManager.GetById(car.ColorId).ColorName}\t\t{brandManager.GetById(car.BrandId).BrandName}\t\t{car.ModelYear}\t\t{car.DailyPrice}\t\t{car.Descriptions}");
             //}
 
-
             //Console.WriteLine("Brand Id'si 2 olan arabalar: \nId\tColor Name\tBrand Name\tModel Year\tDaily Price\tDescriptions");
             //foreach (var car in carManager.GetAllByBrandId(2))
             //{
             //    Console.WriteLine($"{car.CarId}\t{colorManager.GetById(car.ColorId).ColorName}\t\t{brandManager.GetById(car.BrandId).BrandName}\t\t{car.ModelYear}\t\t{car.DailyPrice}\t\t{car.Descriptions}");
             //}
 
+            var result = carManager.GetCarDetails();
 
-
-            foreach (var car in carManager.GetCarDetails())
+            if (result.Success==true)
             {
-                Console.WriteLine("{0} -- {1} -- {2}" , car.BrandName , car.ColorName, car.DailyPrice);
+                foreach (var car in result.Data)
+                {
+                    Console.WriteLine("{0} -- {1} -- {2}", car.BrandName, car.ColorName, car.DailyPrice);
+                }
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
             }
         }
     }

@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
@@ -16,45 +18,49 @@ namespace Business.Concrete
             _brandDal = brandDal;
         }
 
-        public void Add(Brand brand)
+        public IResult Add(Brand brand)
         {
             if (brand.BrandName.Length > 2)
             {
                 _brandDal.add(brand);
-                Console.WriteLine("Marka başarıyla eklendi.");
+                return new SuccessResult(Messages.BrandAdded);
             }
             else
             {
-                Console.WriteLine($"Üzgünüm,markayı ekleyemediniz.Lütfen yazdığınız marka isminin uzunluğunu 2 karakterden fazla giriniz! Girdiğiniz marka ismi : {brand.BrandName}");
+                return new ErrorResult(Messages.BrandNameInvalid);
             }
         }
 
-        public void Delete(Brand brand)
+        public IResult Delete(Brand brand)
         {
             _brandDal.Delete(brand);
-            Console.WriteLine("Marka başarıyla silindi.");
+            return new SuccessResult(Messages.BrandDeleted);
         }
 
-        public List<Brand> GetAll()
+        public IDataResult<List<Brand>> GetAll()
         {
-            return _brandDal.GetAll();
+            if (DateTime.Now.Hour==21)
+            {
+                return new ErrorDataResult<List<Brand>> (Messages.MainintenanceTime);
+            }
+            return new SuccessDataResult<List<Brand>> (_brandDal.GetAll(), Messages.BrandsListed);
         }
 
-        public Brand GetById(int brandId)
+        public IDataResult<Brand> GetById(int brandId)
         {
-            return _brandDal.Get(b => b.BrandId == brandId);
+            return new SuccessDataResult<Brand> (_brandDal.Get(b => b.BrandId == brandId));
         }
 
-        public void Update(Brand brand)
+        public IResult Update(Brand brand)
         {
             if (brand.BrandName.Length > 2)
             {
                 _brandDal.Update(brand);
-                Console.WriteLine("Marka başarıyla Güncellndi.");
+                return new SuccessResult(Messages.BrandUpdated);
             }
             else
             {
-                Console.WriteLine($"Üzgünüm,marka güncellenemedi.Lütfen yazdığınız marka isminin uzunluğunu 2 karakterden fazla giriniz! Girdiğiniz marka ismi : {brand.BrandName}");
+                return new ErrorResult(Messages.BrandNotUpdated);
             }
         }
     }
