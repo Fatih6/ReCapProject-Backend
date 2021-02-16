@@ -24,6 +24,8 @@ namespace Business.Constants
         public static string ColorsListed = "Renkler listelendi";
         public static string BrandsListed = "Markalar listelendi";
         public static string RentalAdded = "Kiralama başarılı";
+        public static string RentalDeleted = "Kiralama bilgileri silindi";
+        public static string RentalUpdated = "Kiralama bilgileri güncellendi";
         public static string RentalReturnDateInvalid = "Kiralama Başarısız.Araç henüz teslim edilmedi.";
         public static string RentalReturnDateUpdated = "Geri dönüş tarihi güncellendi";
     }

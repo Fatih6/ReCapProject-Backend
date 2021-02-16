@@ -15,23 +15,55 @@ namespace ConsoleUI
             ColorManager colorManager = new ColorManager(new EfColorDal());
             CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
             UserManager userManager = new UserManager(new EfUserDal());
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
 
-            //Console.WriteLine("\n\nGünlük fiyat aralığı 200 ile 250 olan arabalar: \nId\tColor Name\tBrand Name\tModel Year\tDaily Price\tDescriptions");
-            //foreach (var car in carManager.GetByDailyPrice(200, 250))
-            //{
-            //    Console.WriteLine($"{car.CarId}\t{colorManager.GetById(car.ColorId).ColorName}\t\t{brandManager.GetById(car.BrandId).BrandName}\t\t{car.ModelYear}\t\t{car.DailyPrice}\t\t{car.Descriptions}");
-            //}
+            rentalManager.Add(new Rental {CarId = 2, CustomerId = 2, RentDate = new DateTime(2021,05,11), ReturnDate = new DateTime() });
 
-            //Console.WriteLine("Brand Id'si 2 olan arabalar: \nId\tColor Name\tBrand Name\tModel Year\tDaily Price\tDescriptions");
-            //foreach (var car in carManager.GetAllByBrandId(2))
-            //{
-            //    Console.WriteLine($"{car.CarId}\t{colorManager.GetById(car.ColorId).ColorName}\t\t{brandManager.GetById(car.BrandId).BrandName}\t\t{car.ModelYear}\t\t{car.DailyPrice}\t\t{car.Descriptions}");
-            //}
+
+            //test2(carManager, brandManager, colorManager);
+
+            //test1(carManager, brandManager, colorManager);
+
             //CarTest(carManager);
 
             //CustomerAdd(customerManager);
 
             //UserAdd(userManager);
+
+            //rentalManager.Add(new Rental {CarId = 1 ,CustomerId=1, RentDate=1987.,ReturnDate });
+
+
+            //UserListed(userManager);
+        }
+
+        private static void test2(CarManager carManager, BrandManager brandManager, ColorManager colorManager)
+        {
+            //Console.WriteLine("\n\nGünlük fiyat aralığı 200 ile 250 olan arabalar: \nId\tColor Name\tBrand Name\tModel Year\tDaily Price\tDescriptions");
+            //foreach (var car in carManager.GetByDailyPrice(200, 250))
+            //{
+            //    Console.WriteLine($"{car.CarId}\t{colorManager.GetById(car.ColorId).ColorName}\t\t{brandManager.GetById(car.BrandId).BrandName}\t\t{car.ModelYear}\t\t{car.DailyPrice}\t\t{car.Descriptions}");
+            //}
+        }
+
+        private static void test1(CarManager carManager, BrandManager brandManager, ColorManager colorManager)
+        {
+            //Console.WriteLine("Brand Id'si 2 olan arabalar: \nId\tColor Name\tBrand Name\tModel Year\tDaily Price\tDescriptions");
+            //foreach (var car in carManager.GetAllByBrandId(2))
+            //{
+            //    Console.WriteLine($"{car.CarId}\t{colorManager.GetById(car.ColorId).ColorName}\t\t{brandManager.GetById(car.BrandId).BrandName}\t\t{car.ModelYear}\t\t{car.DailyPrice}\t\t{car.Descriptions}");
+            //}
+        }
+
+        private static void UserListed(UserManager userManager)
+        {
+            var result = userManager.GetAll();
+            if (result.Success == true)
+            {
+                foreach (var user in result.Data)
+                {
+                    Console.WriteLine("{0} -- {1} ", user.FirstName, user.LastName);
+                }
+            }
         }
 
         private static void CustomerAdd(CustomerManager customerManager)
