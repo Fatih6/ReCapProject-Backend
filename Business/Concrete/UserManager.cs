@@ -20,7 +20,7 @@ namespace Business.Concrete
 
         public IResult Add(User user)
         {
-            _userDal.add(user);
+            _userDal.Add(user);
             return new SuccessResult(Messages.UserAdded);
         }
 

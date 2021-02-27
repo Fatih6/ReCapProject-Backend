@@ -50,5 +50,7 @@ namespace Business.Constants
         public static string UserUpdate = "Kullanıcı bilgileri güncellendi";
         public static string UsersListed = "Kullanıcılar listelendi";
 
+        //Image
+        public static string FailImageLimitExceeded = "Resim ekleme sınırı aşıldı";
     }
 }

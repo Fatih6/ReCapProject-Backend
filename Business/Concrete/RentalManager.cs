@@ -30,7 +30,7 @@ namespace Business.Concrete
             {
                 return new ErrorResult(result.Message);
             }
-            _rentalDal.add(rental);
+            _rentalDal.Add(rental);
             return new SuccessResult(result.Message);
         }
 

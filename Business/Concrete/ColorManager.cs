@@ -23,7 +23,7 @@ namespace Business.Concrete
         [ValidationAspect(typeof(ColorValidator))]
         public IResult Add(Color carColor)
         {
-            _colorDal.add(carColor);
+            _colorDal.Add(carColor);
             return new SuccessResult(Messages.ColorAdded);
         }
 
