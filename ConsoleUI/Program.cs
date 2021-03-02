@@ -75,12 +75,12 @@ namespace ConsoleUI
 
         private static void UserAdd(UserManager userManager)
         {
-            userManager.Add(new User { FirstName = "Cemal", LastName = "artı", Email = "cemal@gmail.com", Password = "123321" });
-            userManager.Add(new User { FirstName = "Mehmet", LastName = "çatı", Email = "mehmet123@gmail.com", Password = "321123" });
-            userManager.Add(new User { FirstName = "Yusuf", LastName = "sert", Email = "celikler123321@gmail.com", Password = "12354" });
-            userManager.Add(new User { FirstName = "Fatih", LastName = "ekmek", Email = "123f321@gmail.com", Password = "123456" });
-            userManager.Add(new User { FirstName = "Mehmet", LastName = "askı", Email = "mhmask1@gmail.com", Password = "54321" });
-            userManager.Add(new User { FirstName = "mert", LastName = "dalman", Email = "mert12333@gmail.com", Password = "3216543" });
+            //userManager.Add(new User { FirstName = "Cemal", LastName = "artı", Email = "cemal@gmail.com", Password = "123321" });
+            //userManager.Add(new User { FirstName = "Mehmet", LastName = "çatı", Email = "mehmet123@gmail.com", Password = "321123" });
+            //userManager.Add(new User { FirstName = "Yusuf", LastName = "sert", Email = "celikler123321@gmail.com", Password = "12354" });
+            //userManager.Add(new User { FirstName = "Fatih", LastName = "ekmek", Email = "123f321@gmail.com", Password = "123456" });
+            //userManager.Add(new User { FirstName = "Mehmet", LastName = "askı", Email = "mhmask1@gmail.com", Password = "54321" });
+            //userManager.Add(new User { FirstName = "mert", LastName = "dalman", Email = "mert12333@gmail.com", Password = "3216543" });
         }
 
         private static void CarTest(CarManager carManager)
