@@ -1,15 +1,18 @@
 ﻿using Core.DataAccess.EntityFramework;
 using DataAccess.Abstract;
-using DataAccess.Concrete.EntityFramework.Context;
 using Entities.Concrete;
 using Entities.DTOs;
-using System;
-using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 
-namespace DataAccess.Concrete.EntityFramework.Repository
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+using DataAccess.Concrete.EntityFramework.Context;
+
+namespace DataAccess.Concrete.EntityFramework
 {
     public class EfRentalDal : EfEntityRepositoryBase<Rental, ReCapProject>, IRentalDal
     {
@@ -17,25 +20,38 @@ namespace DataAccess.Concrete.EntityFramework.Repository
         {
             using (ReCapProject context = new ReCapProject())
             {
-                var result = from re in filter is null ? context.Rentals : context.Rentals.Where(filter)
-                             join c in context.Cars
-                             on re.CarId equals c.CarId
-                             join cus in context.Customers
-                             on re.CustomerId equals cus.Id
-                             join us in context.Users
-                             on cus.UserId equals us.Id
+                var result = from rental in filter is null ? context.Rentals : context.Rentals.Where(filter)
+
+                             join car in context.Cars
+                             on rental.CarId equals car.CarId
+
+                             join customer in context.Customers
+                             on rental.CustomerId equals customer.UserId
+
+                             join user in context.Users
+                             on customer.UserId equals user.Id
+
+                             join brand in context.Brands
+                             on car.BrandId equals brand.BrandId
+
+                             join color in context.Colors
+                             on car.ColorId equals color.ColorId
+
+                             orderby rental.Id
                              select new RentalDetailDto
                              {
-                                 Id = re.Id,
-                                 CustomerName = cus.CompanyName,
-                                 CarId = c.CarId,
-                                 RentDate = re.RentDate,
-                                 ReturnDate = re.ReturnDate,
-                                 UserName = us.FirstName + " " + us.LastName
+                                 RentalId = rental.Id,
+                                 BrandName = brand.BrandName,
+                                 ColorName = color.ColorName,
+                                 CompanyName = customer.CompanyName,
+                                 DailyPrice = car.DailyPrice,
+                                 Description = car.Descriptions,
+                                 Email = user.Email,
+                                 FirstName = user.FirstName,
+                                 LastName = user.LastName,
+                                 ModelYear = car.ModelYear
                              };
-
                 return result.ToList();
-
             }
         }
     }

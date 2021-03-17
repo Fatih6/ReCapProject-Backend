@@ -5,14 +5,9 @@ using System.Text;
 
 namespace Entities.DTOs
 {
-    public class RentalDetailDto:IDto
+    public class CustomerDetailDto:IDto
     {
-        public int RentalId { get; set; }
-        public string BrandName { get; set; }
-        public string ColorName { get; set; }
-        public int ModelYear { get; set; }
-        public decimal DailyPrice { get; set; }
-        public string Description { get; set; }
+        public int CustomerId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }

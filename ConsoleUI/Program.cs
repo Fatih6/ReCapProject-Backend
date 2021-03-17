@@ -1,4 +1,5 @@
 ﻿using Business.Concrete;
+using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.EntityFramework.Repository;
 using Entities.Concrete;
 using System;
@@ -10,14 +11,14 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            CarManager carManager = new CarManager(new EfCarDal());
+            //CarManager carManager = new CarManager(new EfCarDal());
             BrandManager brandManager = new BrandManager(new EfBrandDal());
             ColorManager colorManager = new ColorManager(new EfColorDal());
             CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
             UserManager userManager = new UserManager(new EfUserDal());
             RentalManager rentalManager = new RentalManager(new EfRentalDal());
 
-            rentalManager.Add(new Rental {CarId = 2, CustomerId = 2, RentDate = new DateTime(2021,05,11), ReturnDate = new DateTime() });
+            //rentalManager.Add(new Rental {CarId = 2, CustomerId = 2, RentDate = new DateTime(2021,05,11), ReturnDate = new DateTime() });
 
 
             //test2(carManager, brandManager, colorManager);
@@ -85,7 +86,7 @@ namespace ConsoleUI
 
         private static void CarTest(CarManager carManager)
         {
-            var result = carManager.GetCarDetails();
+            var result = carManager.GetAllCarDetails();
 
             if (result.Success == true)
             {

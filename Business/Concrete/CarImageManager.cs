@@ -53,7 +53,7 @@ namespace Business.Concrete
         [CacheRemoveAspect("ICarImageService.Get")]
         public IResult Delete(CarImage carImage)
         {
-            var oldpath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\wwwroot")) + _carImageDal.Get(c=>c.Id == carImage.Id).ImagePath;
+            var oldpath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\wwwroot")) + _carImageDal.Get(c => c.Id == carImage.Id).ImagePath;
 
             IResult result = BusinessRules.Run(
                 FileHelper.DeleteAsync(oldpath)
@@ -81,15 +81,35 @@ namespace Business.Concrete
 
         }
 
-        public IDataResult<CarImage> Get(int id)
+        public IResult DeleteByCarId(int carId)
         {
-            return new SuccessDataResult<CarImage>(_carImageDal.Get(c=>c.Id == id));
+            var result = _carImageDal.GetAll(c => c.CarId == carId);
+            if (result.Any())
+            {
+                foreach (var carImage in result)
+                {
+                    Delete(carImage);
+                }
+                return new SuccessResult();
+            }
+            return new ErrorResult(Messages.CarHaveNoImage);
         }
 
-        [CacheAspect(duration:10)]
+        public IDataResult<CarImage> Get(int id)
+        {
+            return new SuccessDataResult<CarImage>(_carImageDal.Get(c => c.Id == id));
+        }
+
+        [CacheAspect(duration: 10)]
         public IDataResult<List<CarImage>> GetAll()
         {
             return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll());
+        }
+
+
+        public IDataResult<List<CarImage>> GetAllByCarId(int carId)
+        {
+            return new SuccessDataResult<List<CarImage>>(CheckIfCarHaveNoImage(carId));
         }
 
         public IDataResult<List<CarImage>> GetImagesByCarId(int id)
@@ -109,7 +129,7 @@ namespace Business.Concrete
             try
             {
                 string path = @"\Images\default.jpg";
-                var result = _carImageDal.GetAll(c=>c.CarId == id).Any();
+                var result = _carImageDal.GetAll(c => c.CarId == id).Any();
                 if (!result)
                 {
                     List<CarImage> carimage = new List<CarImage>();
@@ -122,18 +142,28 @@ namespace Business.Concrete
                 return new ErrorDataResult<List<CarImage>>(exception.Message);
             }
 
-            return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(c=>c.CarId == id).ToList());
+            return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(c => c.CarId == id).ToList());
         }
 
 
         private IResult CheckIfImageLimit(int carId)
         {
-            var carImageCount = _carImageDal.GetAll(c=> c.CarId == carId).Count;
+            var carImageCount = _carImageDal.GetAll(c => c.CarId == carId).Count;
             if (carImageCount >= 5)
             {
                 return new ErrorResult(Messages.FailImageLimitExceeded);
             }
             return new SuccessResult();
         }
+
+        private List<CarImage> CheckIfCarHaveNoImage(int carId)
+        {
+            string path = @"\Images\default.png";
+            var result = _carImageDal.GetAll(c => c.CarId == carId);
+            if (!result.Any())
+                return new List<CarImage> { new CarImage { CarId = carId, ImagePath = path } };
+            return result;
+        }
+
     }
 }

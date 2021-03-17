@@ -54,6 +54,7 @@ namespace Business.Constants
 
         //Image
         public static string FailImageLimitExceeded = "Resim ekleme sınırı aşıldı";
+        public static string CarHaveNoImage = "Arabanın resmi yok.";
 
         //JWT
         public static string AuthorizationDenied = "Yetkiniz yok";
@@ -65,5 +66,6 @@ namespace Business.Constants
         public static string SuccessfulLogin = "Giriş başarılı";
         public static string UserAlreadyExists = "Kullanıcı mevcut";
         public static string AccessTokenCreated = "Erişim tokeni oluşturuldu";
+
     }
 }
