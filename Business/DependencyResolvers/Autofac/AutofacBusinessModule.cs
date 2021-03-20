@@ -50,6 +50,10 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<AuthManager>().As<IAuthService>();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
 
+            //FakeCard
+            builder.RegisterType<FakeCardManager>().As<IFakeCardService>();
+            builder.RegisterType<EfFakeCardDal>().As<IFakeCardDal>();
+
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 

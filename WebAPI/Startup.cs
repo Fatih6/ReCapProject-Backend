@@ -41,6 +41,8 @@ namespace WebAPI
 
             services.AddCors();
 
+            services.AddControllers().AddNewtonsoftJson();
+
             var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

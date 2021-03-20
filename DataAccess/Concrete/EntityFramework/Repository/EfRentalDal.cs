@@ -16,31 +16,24 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfRentalDal : EfEntityRepositoryBase<Rental, ReCapProject>, IRentalDal
     {
-        public List<RentalDetailDto> GetRentalDetails(Expression<Func<Rental, bool>> filter = null)
+        public List<RentalDetailDto> GetAllRentalDetails()
         {
             using (ReCapProject context = new ReCapProject())
             {
-                var result = from rental in filter is null ? context.Rentals : context.Rentals.Where(filter)
-
+                var result = from rent in context.Rentals
                              join car in context.Cars
-                             on rental.CarId equals car.CarId
-
-                             join customer in context.Customers
-                             on rental.CustomerId equals customer.UserId
-
-                             join user in context.Users
-                             on customer.UserId equals user.Id
-
+                             on rent.CarId equals car.CarId
                              join brand in context.Brands
                              on car.BrandId equals brand.BrandId
-
+                             join customer in context.Customers
+                             on rent.CustomerId equals customer.Id
+                             join user in context.Users
+                             on customer.UserId equals user.Id
                              join color in context.Colors
                              on car.ColorId equals color.ColorId
-
-                             orderby rental.Id
                              select new RentalDetailDto
                              {
-                                 RentalId = rental.Id,
+                                 RentalId = rent.Id,
                                  BrandName = brand.BrandName,
                                  ColorName = color.ColorName,
                                  CompanyName = customer.CompanyName,
@@ -49,7 +42,12 @@ namespace DataAccess.Concrete.EntityFramework
                                  Email = user.Email,
                                  FirstName = user.FirstName,
                                  LastName = user.LastName,
-                                 ModelYear = car.ModelYear
+                                 ModelYear = car.ModelYear,
+                                 RentDate = rent.RentDate,
+                                 RentStartDate = rent.RentStartDate,
+                                 RentEndDate = rent.RentEndDate,
+                                 ReturnDate = rent.ReturnDate
+
                              };
                 return result.ToList();
             }

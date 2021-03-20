@@ -84,21 +84,21 @@ namespace ConsoleUI
             //userManager.Add(new User { FirstName = "mert", LastName = "dalman", Email = "mert12333@gmail.com", Password = "3216543" });
         }
 
-        private static void CarTest(CarManager carManager)
-        {
-            var result = carManager.GetAllCarDetails();
+        //private static void CarTest(CarManager carManager)
+        //{
+        //    var result = carManager.GetAllCarDetails();
 
-            if (result.Success == true)
-            {
-                foreach (var car in result.Data)
-                {
-                    Console.WriteLine("{0} -- {1} -- {2}", car.BrandName, car.ColorName, car.DailyPrice);
-                }
-            }
-            else
-            {
-                Console.WriteLine(result.Message);
-            }
+        //    if (result.Success == true)
+        //    {
+        //        foreach (var car in result.Data)
+        //        {
+        //            Console.WriteLine("{0} -- {1} -- {2}", car.BrandName, car.ColorName, car.DailyPrice);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine(result.Message);
+        //    }
         }
     }
 }

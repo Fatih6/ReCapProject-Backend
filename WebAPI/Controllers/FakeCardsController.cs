@@ -1,6 +1,5 @@
 ﻿using Business.Abstract;
 using Entities.Concrete;
-using Entities.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,18 +11,19 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CarsController : ControllerBase
+    public class FakeCardsController : ControllerBase
     {
-        ICarService _carService;
-        public CarsController(ICarService carService)
+        IFakeCardService _fakeCardService;
+
+        public FakeCardsController(IFakeCardService fakeCardService)
         {
-            _carService = carService;
+            _fakeCardService = fakeCardService;
         }
 
         [HttpPost("add")]
-        public IActionResult Add(Car car)
+        public IActionResult Add(FakeCard fakeCard)
         {
-            var result = _carService.Add(car);
+            var result = _fakeCardService.Add(fakeCard);
             if (result.Success)
             {
                 return Ok(result);
@@ -32,9 +32,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpDelete("delete")]
-        public IActionResult Delete(Car car)
+        public IActionResult Delete(FakeCard fakeCard)
         {
-            var result = _carService.Delete(car);
+            var result = _fakeCardService.Delete(fakeCard);
             if (result.Success)
             {
                 return Ok(result);
@@ -43,9 +43,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut("update")]
-        public IActionResult Update(Car car)
+        public IActionResult Update(FakeCard fakeCard)
         {
-            var result = _carService.Update(car);
+            var result = _fakeCardService.Update(fakeCard);
             if (result.Success)
             {
                 return Ok(result);
@@ -56,8 +56,7 @@ namespace WebAPI.Controllers
         [HttpGet("getall")]
         public IActionResult GetAll()
         {
-            var result = _carService.GetAll();
-
+            var result = _fakeCardService.GetAll();
             if (result.Success)
             {
                 return Ok(result);
@@ -68,7 +67,7 @@ namespace WebAPI.Controllers
         [HttpGet("getbyid")]
         public IActionResult GetById(int id)
         {
-            var result = _carService.GetById(id);
+            var result = _fakeCardService.GetById(id);
             if (result.Success)
             {
                 return Ok(result);
@@ -76,11 +75,10 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-
-        [HttpGet("getcarsbybrandid")]
-        public IActionResult GetCarsByBrandId(int brandId)
+        [HttpGet("getbycardnumber")]
+        public IActionResult GetByCardNumber(string cardNumber)
         {
-            var result = _carService.GetCarsByBrand(brandId);
+            var result = _fakeCardService.GetByCardNumber(cardNumber);
             if (result.Success)
             {
                 return Ok(result);
@@ -88,26 +86,15 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpGet("getcarsbycolorid")]
-        public IActionResult GetCarsByColorId(int colorId)
+        [HttpPost("iscardexist")]
+        public IActionResult IsCardExist(FakeCard fakeCard)
         {
-            var result = _carService.GetCarsByColor(colorId);
+            var result = _fakeCardService.IsCardExist(fakeCard);
             if (result.Success)
             {
                 return Ok(result);
             }
-            return BadRequest(result);
-        }
-
-        [HttpGet("getcarsdetails")]
-        public IActionResult GetCarsDetails([FromQuery] CarDetailFilterDto filterDto)
-        {
-            var result = _carService.GetCarsDetails(filterDto);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
+            return Ok(result);
         }
     }
 }
