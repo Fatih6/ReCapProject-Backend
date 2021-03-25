@@ -1,4 +1,5 @@
 ﻿using Core.DataAccess.EntityFramework;
+using Core.Extensions;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework.Context;
 using Entities.Concrete;
@@ -16,18 +17,20 @@ namespace DataAccess.Concrete.EntityFramework.Repository
         {
             using (ReCapProject context = new ReCapProject())
             {
-                var filterExpression = GetFilterExpression(filterDto);
+                var filterExpression = filterDto.GetFilterExpression<Car>();
                 var result = from car in filterExpression == null ? context.Cars : context.Cars.Where(filterExpression)
                              join color in context.Colors on car.ColorId equals color.ColorId
                              join brand in context.Brands on car.BrandId equals brand.BrandId
                              select new CarDetailDto
                              {
                                  CarId = car.CarId,
+                                 BrandId = brand.BrandId,
+                                 ColorId = color.ColorId,
                                  BrandName = brand.BrandName,
                                  Descriptions = car.Descriptions,
-                                 ModelYear = car.ModelYear,
                                  ColorName = color.ColorName,
-                                 DailyPrice = car.DailyPrice
+                                 DailyPrice = car.DailyPrice,
+                                 ModelYear = car.ModelYear
                              };
                 return result.ToList();
 

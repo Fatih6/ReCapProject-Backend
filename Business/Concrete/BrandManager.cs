@@ -24,7 +24,7 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(BrandValidator))]
-        [SecuredOperation("admin,brand.add")]
+        //[SecuredOperation("admin,brand.add")]
         [CacheRemoveAspect("IBrandService.Get")]
         public IResult Add(Brand brand)
         {
@@ -52,7 +52,7 @@ namespace Business.Concrete
             return new SuccessDataResult<Brand> (_brandDal.Get(b => b.BrandId == brandId));
         }
 
-        [SecuredOperation("admin,brand.update")]
+        //[SecuredOperation("admin,brand.update")]
         [ValidationAspect(typeof(BrandValidator))]
         [CacheRemoveAspect("IBrandService.Get")]
         public IResult Update(Brand brand)
