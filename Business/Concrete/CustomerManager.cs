@@ -48,7 +48,7 @@ namespace Business.Concrete
 
         public IDataResult<Customer> GetById(int customerId)
         {
-            return new SuccessDataResult<Customer>(_customerDal.Get(cus=>cus.Id == customerId));
+            return new SuccessDataResult<Customer>(_customerDal.Get(cus=>cus.UserId == customerId));
         }
 
         [CacheRemoveAspect("ICustomerService.Get")]
@@ -56,6 +56,14 @@ namespace Business.Concrete
         {
             _customerDal.Update(customer);
             return new SuccessResult(Messages.CustomerUpdate);
+        }
+
+        public IResult UpdateCustomerFindeks(int customerId)
+        {
+            var customerToUpdateFindeks = _customerDal.Get(c => c.UserId == customerId);
+            customerToUpdateFindeks.FindeksScore += 100;
+            _customerDal.Update(customerToUpdateFindeks);
+            return new SuccessResult(Messages.WinFindeks);
         }
     }
 }

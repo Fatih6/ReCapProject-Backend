@@ -70,5 +70,16 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+
+        [HttpPut("updateinfos")]
+        public IActionResult UpdateInfos(User user)
+        {
+            var result = _userService.UpdateInfos(user);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
     }
 }

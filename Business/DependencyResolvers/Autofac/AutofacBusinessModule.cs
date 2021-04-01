@@ -54,6 +54,10 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<FakeCardManager>().As<IFakeCardService>();
             builder.RegisterType<EfFakeCardDal>().As<IFakeCardDal>();
 
+            //CustomerCard
+            builder.RegisterType<CustomerCardManager>().As<ICustomerCardService>();
+            builder.RegisterType<EfCustomerCardDal>().As<ICustomerCardDal>();
+
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 

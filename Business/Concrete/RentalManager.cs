@@ -60,7 +60,7 @@ namespace Business.Concrete
 
         public IDataResult<List<Rental>> GetAllByCustomerId(int customerId)
         {
-            return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(r => r.CustomerId == customerId));
+            return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(r => r.UserId == customerId));
         }
 
         public IDataResult<Rental> GetById(int id)
@@ -85,12 +85,18 @@ namespace Business.Concrete
 
         public IResult IsRentable(Rental rental)
         {
-            var result = this.GetAllByCarId(rental.CarId).Data.LastOrDefault();
-            if (IsDelivered(rental).Success || (rental.RentStartDate > result.RentEndDate && rental.RentStartDate >= DateTime.Now))
+            var result = this.GetAllByCarId(rental.CarId).Data;
+            foreach (var pastRental in result)
             {
-                return new SuccessResult();
+                if ((!IsDelivered(pastRental).Success) &&
+                    ((rental.RentStartDate <= pastRental.RentEndDate && rental.RentStartDate >= pastRental.RentStartDate) ||
+                    (rental.RentEndDate <= pastRental.RentEndDate && rental.RentEndDate >= pastRental.RentStartDate) ||
+                    (rental.RentStartDate <= pastRental.RentStartDate && rental.RentEndDate >= pastRental.RentEndDate)))
+                {
+                    return new ErrorResult();
+                }
             }
-            return new ErrorResult();
+            return new SuccessResult();
         }
 
         public IDataResult<List<RentalDetailDto>> GetAllRentalsDetails()

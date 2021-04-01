@@ -6,11 +6,10 @@ using System.Text;
 
 namespace Entities.Concrete
 {
-    public class Customer:IEntity
+    public class CustomerCard : IEntity
     {
         [Key]
-        public int UserId { get; set; }
-        public string CompanyName { get; set; }
-        public int FindeksScore { get; set; } = 500;
+        public int CustomerId { get; set; }
+        public int CardId { get; set; }
     }
 }

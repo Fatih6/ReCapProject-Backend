@@ -66,6 +66,12 @@ namespace Business.Constants
         public static string SuccessfulLogin = "Giriş başarılı";
         public static string UserAlreadyExists = "Kullanıcı mevcut";
         public static string AccessTokenCreated = "Erişim tokeni oluşturuldu";
+        public static string ThePasswordWasChanged= "Şifre değiştirildi";
 
+        //Card
+        public static string CardSaved="Kart Kaydedildi";
+        public static string CardDeleted="Kart silindi";
+        //Findex
+        public static string WinFindeks = "Findeks kazandınız!";
     }
 }
